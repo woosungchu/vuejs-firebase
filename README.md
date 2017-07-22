@@ -18,4 +18,5 @@ npm run build
 npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# Firebase Authorization
+https://stackoverflow.com/questions/35418143/how-to-restrict-firebase-data-modification
