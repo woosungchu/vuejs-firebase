@@ -1,6 +1,7 @@
 <template>
   <div>
-  <div class="page-header">
+
+    <div class="page-header">
       <h1>Vue.js 2 & Firebase <small>Sample Application by CodingTheSmartWay.com</small></h1>
     </div>
     <div class="panel panel-default">
@@ -53,27 +54,15 @@
 </template>
 
 <script>
-import Firebase from 'firebase'
-
-let config = {
-  apiKey: "AIzaSyATJF0TthZFfzONJ1ZaoO13PjWZqJYYU8M",
-  authDomain: "fir-vue-tutorial.firebaseapp.com",
-  databaseURL: "https://fir-vue-tutorial.firebaseio.com",
-  projectId: "fir-vue-tutorial",
-  storageBucket: "fir-vue-tutorial.appspot.com",
-  messagingSenderId: "8930388054"
-};
-
-let app = Firebase.initializeApp(config)
-let db = app.database()
-let booksRef = db.ref('books')
+import {db} from '@/helpers/firebase'
 
 export default {
   name: 'hello',
   firebase: {
-    books: booksRef
+    books: {
+        source: db.ref('books')
+    }
   },
-
   data () {
     return {
       newBook: {
@@ -83,19 +72,18 @@ export default {
       }
     }
   },
-
-   methods: {
-      addBook: function () {
-        booksRef.push(this.newBook);
-        this.newBook.title = '';
-        this.newBook.author = '';
-        this.newBook.url = 'http://';
-      },
-      removeBook: function (book) {
-        booksRef.child(book['.key']).remove()
-        toastr.success('Book removed successfully')
-      }
+  methods: {
+    addBook: function () {
+      this.$firebaseRefs.books.push(this.newBook);
+      this.newBook.title = '';
+      this.newBook.author = '';
+      this.newBook.url = 'http://';
+    },
+    removeBook: function (book) {
+      this.$firebaseRefs.books.child(book['.key']).remove()
+      toastr.success('Book removed successfully')
     }
+  }
 }
 </script>
 
